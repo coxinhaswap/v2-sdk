@@ -4,16 +4,10 @@ import JSBI from 'jsbi'
 import { pack, keccak256 } from '@ethersproject/solidity'
 import { getCreate2Address } from '@ethersproject/address'
 
-import {  getInitCodeHash, MINIMUM_LIQUIDITY, FIVE, _997, _1000, ONE, ZERO, getFactoryAddress } from '../constants'
+import { getInitCodeHash, MINIMUM_LIQUIDITY, FIVE, _997, _1000, ONE, ZERO, getFactoryAddress } from '../constants'
 import { InsufficientReservesError, InsufficientInputAmountError } from '../errors'
 
-export const computePairAddress = ({
-  tokenA,
-  tokenB
-}: {
-  tokenA: Token
-  tokenB: Token
-}): string => {
+export const computePairAddress = ({ tokenA, tokenB }: { tokenA: Token; tokenB: Token }): string => {
   const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA] // does safety checks
   return getCreate2Address(
     getFactoryAddress(token0.chainId),
